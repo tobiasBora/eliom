@@ -44,7 +44,7 @@ module Xml = struct
     | ReactNode of elt React.signal
     | ReactChildren of econtent * elt ReactiveData.RList.t
   and elt = {
-    (* See Eliom_content.Html5.To_dom for the 'unwrap' function that convert
+    (* See Eliom_content.Html.To_dom for the 'unwrap' function that convert
        the server's tree representation into the client one. *)
     mutable elt : node lazy_t;
     node_id : node_id;
@@ -299,7 +299,7 @@ module Svg = struct
 
 end
 
-module Html5 = struct
+module Html = struct
 
   module D = struct
     module Xml' = struct
@@ -320,7 +320,7 @@ module Html5 = struct
       let lazy_node ?(a = []) name children =
         make (Node (name, a, Eliom_lazy.force children))
     end
-    module Raw = Html5_f.Make(Xml')(Svg.D.Raw)
+    module Raw = Html_f.Make(Xml')(Svg.D.Raw)
 
     include Raw
 
@@ -340,7 +340,7 @@ module Html5 = struct
 
     let node s = Xml.make_react s
 
-    module Raw = Html5_f.Make(Xml_wed)(Svg.R)
+    module Raw = Html_f.Make(Xml_wed)(Svg.R)
     let filter_attrib (name,a) on =
       let v = match a with
         | Xml.RA a -> Xml.RAReact (React.S.map (function
@@ -365,7 +365,7 @@ module Html5 = struct
   module F = struct
 
     module Xml' = Xml
-    module Raw = Html5_f.Make(Xml')(Svg.F.Raw)
+    module Raw = Html_f.Make(Xml')(Svg.F.Raw)
     include Raw
 
     type ('a, 'b, 'c) lazy_star =
