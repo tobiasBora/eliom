@@ -46,3 +46,5 @@ let reload_fun :
          None)
     | _ ->
       None
+
+let reset_reload_fun service = service.reload_fun <- Rf_keep
