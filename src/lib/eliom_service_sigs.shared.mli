@@ -390,6 +390,9 @@ module type S = sig
     (_, _, _, _, _, _, _, _, _, _, _) t ->
     (unit -> bool) Eliom_client_value.t
 
+  val reset_reload_fun :
+    (_, _, _, _, _, _, _, _, _, _, _) t -> unit
+
   val keep_nl_params :
     (_, _, _, _, _, _, _, _, _, _, _) t -> [ `All | `Persistent | `None ]
 

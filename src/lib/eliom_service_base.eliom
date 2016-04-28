@@ -138,11 +138,10 @@ type ('get, 'post, 'meth, 'attached, 'co, 'ext, 'reg,
     (unit -> ('get -> 'post -> unit Lwt.t) option)
       Eliom_client_value.t ref;
 
-  reload_fun : 'get reload_fun;
+  mutable reload_fun : 'get reload_fun;
 
   service_mark :
-    (unit, unit, 'meth,
-     'attached, 'co, 'ext, 'reg,
+    (unit, unit, 'meth, 'attached, 'co, 'ext, 'reg,
      suff, unit, unit, unit)
       t Eliom_common.wrapper;
 }
@@ -188,6 +187,8 @@ let has_client_fun_lazy s =
    }}
 
 let internal_set_client_fun ~service:{client_fun} f = client_fun := f
+
+let reset_reload_fun service = service.reload_fun <- Rf_keep
 
 let set_client_fun ?app ~service f =
   Eliom_lib.Option.iter
