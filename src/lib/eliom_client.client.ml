@@ -684,7 +684,7 @@ let change_page (type m)
              get_params post_params in
          set_template_content ~uri ?fragment (Some content)
        | _ ->
-         match Eliom_service.client_fun service () with
+         match Eliom_service.client_fun service with
          | Some f ->
            (* The service has a client side implementation.
               We do not make the request *)
@@ -692,7 +692,7 @@ let change_page (type m)
            Eliom_lib.Option.iter
              (fun rf ->
                 reload_function := Some (fun () () -> rf get_params ()))
-             (Eliom_service.get_reload_fun service);
+             (Eliom_service.reload_fun service);
            lwt () = f get_params post_params in
            let uri =
              match
